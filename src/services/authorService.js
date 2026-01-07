@@ -18,3 +18,18 @@ export async function addAuthor(name) {
         console.error("Error", err)
     }
 }
+
+export async function deleteAuthor(id) {
+    try {
+        const deletedAuthor = await prisma.author.delete({
+            where: { id },
+            include: { books: true }
+        })
+
+        return deletedAuthor
+    }
+    catch (err) {
+        console.error("Error", err.message)
+        throw new Error(err.message)
+    }
+}
